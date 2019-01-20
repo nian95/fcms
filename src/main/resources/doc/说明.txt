@@ -1,0 +1,11 @@
+--[1] 美团网址: https://e.dianping.com
+账号: 17755028194
+密码：23017sru
+
+--[2] 花娃网：http://www.huawa.com，
+账号：15194969411
+密码52613141314SHUO
+
+--[3] 花娃网api：http://www.huawa.com/docs/
+
+--[4] 美团点评 - 北极星开放平台：http://open.dianping.com/

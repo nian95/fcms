@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>信息管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="scripts/jquery/jquery-1.7.1.js"></script>
+<link href="style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery-1.4.4.min.js"></script>
+<script src="scripts/My97DatePicker/WdatePicker.js" type="text/javascript" defer="defer"></script>
+<script type="text/javascript" src="scripts/artDialog/artDialog.js?skin=default"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		/*
+		 * 提交
+		 */
+		$("#submitbutton").click(function() {
+			if(validateForm()){
+				checkFyFhSubmit();
+			}
+		});
+		
+		/*
+		 * 取消
+		 */
+		$("#cancelbutton").click(function() {
+			/**  关闭弹出iframe  **/
+			window.parent.$.fancybox.close();
+		});
+		
+		var result = 'null';
+		if(result =='success'){
+			/**  关闭弹出iframe  **/
+			window.parent.$.fancybox.close();
+		}
+	});
+	
+	/** 检测房源房号是否存在  **/
+	function checkFyFh(){
+		// 分别获取小区编号、栋号、层号、房号
+		var fyID = $('#fyID').val();
+		var fyXqCode = $("#fyXq").val();
+		var fyDh = $("#fyDh").val();
+		var fyCh = $("#fyCh").val();	
+		var fyFh = $("#fyFh").val();
+		if(fyXqCode!="" && fyDh!="" && fyCh!="" && fyFh!=""){
+			// 给房屋坐落地址赋值
+			$("#fyZldz").val($('#fyDh option:selected').text() + fyCh + "-" + fyFh);
+			// 异步判断该房室是否存在，如果已存在，给用户已提示哦
+			$.ajax({
+				type:"POST",
+				url:"checkFyFhIsExists.action",
+				data:{"fangyuanEntity.fyID":fyID,"fangyuanEntity.fyXqCode":fyXqCode, "fangyuanEntity.fyDhCode":fyDh, "fangyuanEntity.fyCh":fyCh, "fangyuanEntity.fyFh":fyFh},
+				dataType : "text",
+				success:function(data){
+// 					alert(data);
+					// 如果返回数据不为空，更改“房源信息”
+					if(data=="1"){
+						 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'该房室在系统中已经存在哦，\n请维护其他房室数据', ok:true,});
+						 $("#fyFh").css("background", "#EEE");
+						 $("#fyFh").focus();
+						 return false;
+					}
+				}
+			});
+		}
+	}
+	
+	/** 检测房源房号是否存在并提交form  **/
+	function checkFyFhSubmit(){
+		// 分别获取小区编号、栋号、层号、房号
+		var fyID = $('#fyID').val();
+		var fyXqCode = $("#fyXq").val();
+		var fyDh = $("#fyDh").val();
+		var fyCh = $("#fyCh").val();	
+		var fyFh = $("#fyFh").val();
+		if(fyXqCode!="" && fyDh!="" && fyCh!="" && fyFh!=""){
+			// 给房屋坐落地址赋值
+			$("#fyZldz").val($('#fyDh option:selected').text()  + fyCh + "-" + fyFh);
+			// 异步判断该房室是否存在，如果已存在，给用户已提示哦
+			$.ajax({
+				type:"POST",
+				url:"checkFyFhIsExists.action",
+				data:{"fangyuanEntity.fyID":fyID,"fangyuanEntity.fyXqCode":fyXqCode, "fangyuanEntity.fyDhCode":fyDh, "fangyuanEntity.fyCh":fyCh, "fangyuanEntity.fyFh":fyFh},
+				dataType : "text",
+				success:function(data){
+// 					alert(data);
+					// 如果返回数据不为空，更改“房源信息”
+					if(data=="1"){
+						 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'该房室在系统中已经存在哦，\n请维护其他房室数据', ok:true,});
+						 $("#fyFh").css("background", "#EEE");
+						 $("#fyFh").focus();
+						 return false;
+					}else{
+						$("#submitForm").attr("action", "/xngzf/archives/saveOrUpdateFangyuan.action").submit();
+					}
+				}
+			});
+		}
+		return true;
+	}
+	
+	/** 表单验证  **/
+	function validateForm(){
+		if($("#fyXqName").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源小区', ok:true,});
+			return false;
+		}
+		if($("#fyDh").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源栋号', ok:true,});
+			return false;
+		}
+		if($("#fyCh").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源层号', ok:true,});
+			return false;
+		}
+		if($("#fyFh").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源房号', ok:true,});
+			return false;
+		}
+		if($("#fyZongMj").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源面积', ok:true,});
+			return false;
+		}
+		if($("#fyJizuMj").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写计租面积', ok:true,});
+			return false;
+		}
+		if($("#fyZldz").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源座落地址', ok:true,});
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+<form id="submitForm" name="submitForm" action="/xngzf/archives/initFangyuan.action" method="post">
+	<input type="hidden" name="fyID" value="14458625716623" id="fyID"/>
+	<div id="container">
+		<div id="nav_links">
+			当前位置：基础数据&nbsp;>&nbsp;<span style="color: #1A5CC6;">房源编辑</span>
+			<div id="page_close">
+				<a href="javascript:parent.$.fancybox.close();">
+					<img src="images/common/page_close.png" width="20" height="20" style="vertical-align: text-top;"/>
+				</a>
+			</div>
+		</div>
+		<div class="ui_content">
+			<div><input type="button" id="exportOrder" value="导出订单" /></div>
+			<table  cellspacing="0" cellpadding="0" width="100%" align="left" border="1">
+				<tr>
+					<td colspan="2">
+					<td class="ui_text_lt" align="right">
+						接单人 ： 王文杰
+					</td>
+				</tr>
+				<tr>
+					<!--<td class="ui_text_lt">-->
+						<!--<select name="fangyuanEntity.fyDhCode" id="fyDh" class="ui_select01">-->
+                            <!--<option value="">&#45;&#45;请选择&#45;&#45;</option>-->
+                            <!--<option value="16" selected="selected">瑞景河畔16号楼</option>-->
+                            <!--<option value="17">瑞景河畔17号楼</option>-->
+                            <!--<option value="69">瑞景河畔18号楼</option>-->
+                            <!--<option value="72">瑞景河畔20号楼</option>-->
+                            <!--<option value="73">瑞景河畔22号楼</option>-->
+                            <!--<option value="74">瑞景河畔23号楼</option>-->
+                            <!--<option value="75">瑞景河畔24号楼</option>-->
+                        <!--</select>-->
+					<!--</td>-->
+				</tr>
+				<tr>
+					<td colspan="3">
+						<table cellspacing="0" cellpadding="0" width="100%" border="1">
+							<tr>
+								<th>图片</th>
+								<th>订单编号</th>
+								<th>款式</th>
+								<th>订单状态</th>
+								<th>数量</th>
+								<th>接单价格</th>
+								<th>补差价</th>
+								<th>优惠券</th>
+								<th>下单时间</th>
+								<th>配送时间</th>
+								<th>收货人姓名</th>
+								<th>收货人电话</th>
+							</tr>
+							<tr>
+								<td><img src="'images/common/nav_show.png"></td>
+								<td class="ui_text_lt">154788125729335250881397</td>
+								<td>11朵玫瑰混搭花束</td>
+								<td>待处理</td>
+								<td>1</td>
+								<td>88 元</td>
+								<td>0 元</td>
+								<td>0 元</td>
+								<td>2019-01-19 15:00</td>
+								<td>2019-01-20 11:00-12:00</td>
+								<td>肖先生</td>
+								<td>13380602261</td>
+							</tr>
+						</table>
+					</td>
+
+				</tr>
+				<tr>
+					<td class="ui_text_rt">收货地址</td>
+					<td class="ui_text_lt" colspan="2">广东省 珠海市 斗门区 芙蓉兴盛便利超市(昊隆商行)新堂市场公路南2号，芙蓉兴盛</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">贺卡信息</td>
+					<td class="ui_text_lt" colspan="2">
+						<textarea style="width: auto;height: auto">
+								亲爱的老婆生日快乐！愿你开心每一天，越来越年轻漂亮！
+						</textarea>
+
+						<!--<select name="fangyuanEntity.fyHxCode" id="submitForm_fangyuanEntity_fyHxCode" class="ui_select01">-->
+                            <!--<option value="">&#45;&#45;请选择&#45;&#45;</option>-->
+                            <!--<option value="76" selected="selected">一室一厅一卫</option>-->
+                            <!--<option value="10">两室一厅一卫</option>-->
+                            <!--<option value="14">三室一厅一卫</option>-->
+                            <!--<option value="71">三室两厅一卫</option>-->
+                        <!--</select>-->
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">配送门店</td>
+					<td class="ui_text_lt" colspan="2">等你鲜花(勿忘我花坊)</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">下单人电话</td>
+					<td class="ui_text_lt" colspan="2"> <span>13380602261 </span> &nbsp;<input type="checkbox" /></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td class="ui_text_lt" colspan="2">
+						&nbsp;<input id="submitbutton" type="button" value="提交" class="ui_input_btn01"/>
+						&nbsp;<input id="cancelbutton" type="button" value="取消" class="ui_input_btn01"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</form>
+
+</body>
+</html>

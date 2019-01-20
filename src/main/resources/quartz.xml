@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- job detail definition -->
+    <!--<bean id="xxxServiceJob"-->
+          <!--class="org.springframework.scheduling.quartz.JobDetailFactoryBean">-->
+        <!--&lt;!&ndash;<property name="jobClass" value="com.xxxbean"/>&ndash;&gt;-->
+        <!--<property name="durability" value="true"/>-->
+        <!--<property name="name" value="batchJobServiceTask"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; job trigger &ndash;&gt;-->
+    <!--<bean id="xxxJobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="xxxServiceJob"/>-->
+        <!--</property>-->
+        <!--<property name="repeatInterval" value="2000"/>-->
+        <!--<property name="name" value="batchJobTrigger"/>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash; scheduler factory &ndash;&gt;-->
+    <!--<bean id="startQuertz" lazy-init="false" autowire="no"-->
+          <!--class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
+        <!--<property name="configLocation" value="classpath:quartz.properties"/>-->
+        <!--<property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>-->
+        <!--<property name="triggers">-->
+            <!--<list>-->
+               <!--<ref bean="xxxJobTrigger"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+</beans>
