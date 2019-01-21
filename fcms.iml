@@ -135,7 +135,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.equinox:common:3.2.0-v20060603" level="project" />
     <orderEntry type="library" name="Maven: javax.el:javax.el-api:2.2.5" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.xhtmlrenderer:flying-saucer-pdf-itext5:9.0.9" level="project" />
     <orderEntry type="library" name="Maven: com.itextpdf:itextpdf:5.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.xhtmlrenderer:flying-saucer-core:9.0.9" level="project" />

@@ -5,8 +5,7 @@
          id="WebApp_ID" version="2.5">
     <display-name>cms</display-name>
     <welcome-file-list>
-        <welcome-file>/views/login.html</welcome-file>
-        <welcome-file>/views/index.html</welcome-file>
+        <welcome-file>/login.jsp</welcome-file>
     </welcome-file-list>
 
     <session-config>
